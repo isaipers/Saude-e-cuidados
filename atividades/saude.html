@@ -1,0 +1,210 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Saúde e Cuidados</title>
+    <style>
+     
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+    
+        :root {
+            --bg: #ffffff;
+            --header-bg: #57da7a;
+            --section-bg: #f8f9fa;
+            --text-color: #333;
+            --button-bg: #57da7a;
+            --button-hover-bg: #57da7a;
+        }
+
+ 
+        header {
+            background: var(--header-bg);
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+        }
+
+        nav {
+            display: flex;
+            gap: 1rem;
+        }
+
+        nav a {
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        section {
+            width: 100%;
+            max-width: 800px;
+            margin-bottom: 1rem;
+            background-color: var(--section-bg);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+
+        section.collapsed {
+            max-height: 50px;
+            padding: 0.5rem;
+            overflow: hidden;
+        }
+
+        section h2 {
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        section p {
+            line-height: 1.6;
+            margin: 1rem 0;
+        }
+
+        .collapse-btn {
+            background-color: var(--button-bg);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .collapse-btn:hover {
+            background-color: var(--button-hover-bg);
+        }
+
+
+        footer {
+            background: var(--header-bg);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Saúde e Cuidados <i class="fas fa-heart"></i></h1>
+        <nav>
+            <a href="#section1">Saúde Mental</a>
+            <a href="#section2">Atividades</a>
+            <a href="#section3">Nutrição</a>
+            <a href="#section4">Cálculo do IMC</a>
+        </nav>
+    </header>
+
+    <main>
+        <section id="section1">
+            <h2>Saúde Mental <button class="collapse-btn">Esconder</button></h2>
+            <p>A saúde mental é essencial para alcançar um bem-estar duradouro e uma vida satisfatória. Ela impacta nossa capacidade de lidar com o estresse, estabelecer relacionamentos saudáveis e entre outros.</p>
+        </section>
+        <section id="section2">
+            <h2>Atividades <button class="collapse-btn">Esconder</button></h2>
+            <p>As atividades físicas são essenciais para manter o corpo em boa forma como na flexibilidade e promover a saúde mental e emocional. Criar o hábito de se exercitar é essencial para uma vida saúdavel</p>
+        </section>
+        <section id="section3">
+            <h2>Nutrição <button class="collapse-btn">Esconder</button></h2>
+            <p>A nutrição é essencial para manter o corpo saudável, prevenir doenças e garantir uma vida ativa e produtiva. Consumindo alimentos como frutas, vegetais, proteínas e grãos integrais.</p>
+        </section>
+        <section id="section4">
+            <h2>Cálculo do IMC <button class="collapse-btn">Esconder</button></h2>
+            <p>Digite seu peso e altura para calcular seu IMC (Índice de Massa Corporal):</p>
+            <input type="number" id="weight" placeholder="Peso (kg)" step="0.1" min="0">
+            <input type="number" id="height" placeholder="Altura (m)" step="0.01" min="0">
+            <button onclick="calculateIMC()">Calcular IMC</button>
+            <p id="imcResult"></p>
+        </section>
+    </main>
+
+    <footer>
+        <p>Saúde e Cuidados para uma vida mais bela e saúdavel.</p>
+    </footer>
+
+    <script>
+      
+        const collapseButtons = document.querySelectorAll('.collapse-btn');
+        collapseButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const section = button.closest('section');
+                section.classList.toggle('collapsed');
+                button.textContent = section.classList.contains('collapsed') ? 'Expandir' : 'Esconder';
+            });
+        });
+
+
+        function calculateIMC() {
+            const weight = parseFloat(document.getElementById('weight').value);
+            const height = parseFloat(document.getElementById('height').value);
+            if (weight && height) {
+                const imc = (weight / (height * height)).toFixed(2);
+                let result = `Seu IMC é ${imc}: `;
+
+                if (imc < 18.5) {
+                    result += 'Abaixo do peso';
+                } else if (imc >= 18.5 && imc < 24.9) {
+                    result += 'Peso normal';
+                } else if (imc >= 25 && imc < 29.9) {
+                    result += 'Sobrepeso';
+                } else {
+                    result += 'Obesidade';
+                }
+
+                document.getElementById('imcResult').textContent = result;
+            } else {
+                document.getElementById('imcResult').textContent = 'valores inválidos.';
+            }
+        }
+    </script>
+</body>
+</html>
